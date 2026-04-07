@@ -35,7 +35,7 @@ public class ScreenshotPractice {
 
 
         driver.close();
-        System.out.println("manimozhiyan");
+        
     }
 
 
