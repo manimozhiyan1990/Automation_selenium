@@ -50,5 +50,6 @@ public class District {
         }
 
         reuse.takeScreenshot("MovieSelected");
+        System.out.println("program ended");
     }
 }
