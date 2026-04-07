@@ -54,5 +54,6 @@ public class District {
     }
     public void methodTest(){
         System.out.println("Git data saved ");
+        System.out.println("mani");
     }
 }
