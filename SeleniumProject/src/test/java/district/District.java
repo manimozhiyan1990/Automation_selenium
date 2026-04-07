@@ -52,4 +52,7 @@ public class District {
         reuse.takeScreenshot("MovieSelected");
 
     }
+    public void methodTest(){
+        System.out.println("Git data saved ");
+    }
 }
