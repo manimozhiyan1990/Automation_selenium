@@ -1,8 +1,9 @@
-package district;
+package reusable;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
@@ -23,9 +24,16 @@ public class ReusableMethod {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         this.action = new Actions(driver);
+
     }
 
-    public WebElement waitClick(WebElement element) {
+    // =============================wait method===============================
+    public WebElement waitForPresence(By locator) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+
+    }
+
+    public WebElement waitforClickable(WebElement element) {
 
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
@@ -34,32 +42,38 @@ public class ReusableMethod {
         return wait.until(ExpectedConditions.visibilityOf(element));
 
     }
+
     public WebElement waitvisiblityOfLocator(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 
     }
-
-    public void jsClick(WebElement element) {
-        js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", element);
+//=======================javascript==================================
+    public void jsScroll(WebElement element){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
-    public void jsClick(By locator) {
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    public void jsClick(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", element);
     }
 
-    public void scrollByPixel(int x, int y) {
-        js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(arguments[0], arguments[1])", x, y);
+    public void jsClick(By locator) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        js.executeScript("arguments[0].click();", element);
     }
 
+    public void scrollByPixel(int x, int y) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(arguments[0], arguments[1])", x, y);
+    }
+//=====================screen shot====================================
     public void takeScreenshot(String imageName) throws IOException {
         TakesScreenshot ts = (TakesScreenshot) driver;
         File src = ts.getScreenshotAs(OutputType.FILE);
 
-        File dest = new File("C:\\Users\\user\\Documents\\GitHub\\Automation_selenium\\SeleniumProject\\target\\Screenshot\\GoogleMap\\" + imageName + ".png");
+        File dest = new File("C:\\Users\\user\\Documents\\GitHub\\Automation_selenium\\SeleniumProject\\target\\Screenshot\\Yatra\\" + imageName + ".png");
         FileHandler.copy(src, dest);
     }
 
@@ -70,18 +84,40 @@ public class ReusableMethod {
     }
 
     // Action method=========================
-    public void mouseHover(WebElement element){
+
+    public void mouseHover(WebElement element) {
         action.moveToElement(element).perform();
 
     }
-    public void mouseHoverClick(WebElement element){
+
+    public void mouseHoverClick(WebElement element) {
         action.moveToElement(element).click().perform();
     }
-    public void doubleClick(WebElement element){
+
+    public void doubleClick(WebElement element) {
         action.doubleClick(element).click().perform();
     }
-    public void rightClick(WebElement element){
+
+    public void rightClick(WebElement element) {
         action.contextClick(element).perform();
     }
+    public void delayclick(WebElement element){
+        action.moveToElement(element).pause(Duration.ofSeconds(2000)).click().perform();
+    }
 
+
+    //===================Drop Down======================================
+
+    public void selectByText(WebElement element, String text) {
+        Select select = new Select(element);
+        select.selectByVisibleText(text);
+    }
+    public void selectByIndex(WebElement element, int index) {
+        Select select = new Select(element);
+        select.selectByIndex(index);
+    }
+    public void selectByValue(WebElement element, String value) {
+        Select select = new Select(element);
+        select.selectByValue(value);
+    }
 }
